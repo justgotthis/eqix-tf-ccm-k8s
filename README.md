@@ -1,4 +1,4 @@
-Simple Kubernetes ClusterKubernetes on Equinix Metal
+Simple Kubernetes Cluster on Equinix Metal
 ===========================
 
 This guide can be used as a reference to deploy Kubernetes on Equinix Metal bare-metal servers in a single facility.  This repository is [Experimental](https://github.com/packethost/standards/blob/master/experimental-statement.md) meaning that it's based on untested ideas or techniques and not yet established or finalized or involves a radically new and innovative style! This means that support is best effort (at best!) and we strongly encourage you to NOT use this in production.
