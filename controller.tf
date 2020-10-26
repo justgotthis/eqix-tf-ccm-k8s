@@ -1,5 +1,6 @@
 // Setup the kubernetes controller node
 resource "packet_device" "k8s_controller" {
+  count            = var.master_count
   project_id       = var.project_id
   facilities       = [var.facility]
   plan             = var.plan_primary
@@ -7,12 +8,17 @@ resource "packet_device" "k8s_controller" {
   hostname         = format("%s-master%02d", var.cluster_name, count.index + 1)
   billing_cycle    = "hourly"
   tags             = ["kubernetes", "k8s", "controller"]
+}
+  
+# Using a null_resource so the packet_device doesn't have to wait to be initially provisioned
+resource "null_resource" "setup_master" {
+  count = var.master_count
 
   connection {
     type = "ssh"
     user = "root"
-    host = packet_device.k8s_controller.access_public_ipv4
-    private_key = tls_private_key.ssh_key_pair.private_key_pem
+    host = element(packet_device.k8s_controller.*.access_public_ipv4, count.index)
+    private_key = tls_private_key.k8s_cluster_access_key.private_key_pem
   }
 
   provisioner "file" {
@@ -48,13 +54,14 @@ resource "packet_device" "k8s_controller" {
 
 data "external" "kubeadm_join" {
   program = ["${path.module}/scripts/kubeadm-token.sh"]
+  count = var.master_count
 
   query = {
-    host = packet_device.k8s_controller.access_public_ipv4
+    host = element(packet_device.k8s_controller.*.access_public_ipv4, count.index)
   }
 
   # Make sure to only run this after the controller is up and setup
-  depends_on = [packet_device.k8s_controller]
+  depends_on = [null_resource.setup_master]
 }
 
 data "template_file" "setup_kubeadm" {

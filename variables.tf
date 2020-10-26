@@ -7,15 +7,23 @@ variable "project_id" {
 }
 
 variable "facility" {
-  description = "Your Packet Facility Code (e.g. dfw2)"
+  default = "dfw2"
+  description = "Your Packet Facility Code"
 }
 
 variable "plan_primary" {
-  description = "Plan for Controller (e.g. c3.small.x86)"
+  default = "c3.small.x86"
+  description = "Plan for Controller"
 }
 
 variable "plan_node" {
-  description = "Plan for Workers (e.g. c3.small.x86)"
+  default = "c3.small.x86"
+  description = "Plan for Workers"
+}
+
+variable "master_count" {
+  default = "1"
+  description = "Number of Master nodes."
 }
 
 variable "node_count" {
@@ -24,7 +32,7 @@ variable "node_count" {
 }
 
 variable "cluster_name" {
-  default = "simple-k8s"
+  default = "barebones-k8s"
   description = "The cluster project name, will prepend hostnames"
 }
 
