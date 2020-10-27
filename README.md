@@ -4,17 +4,17 @@ Bare Bones Kubernetes Cluster on Bare Metal
 TL;DR
 ----
 
-**1.** Clone this repository
-**2.** Open the "terraform.tfvars" file and add your project ID and API Key (additional options can be changed in this file)
+1. Clone this repository
+2. Open the "terraform.tfvars" file and add your project ID and API Key (additional options can be changed in this file)
 ```sh
 auth_token = "API_KEY"
 project_id = "PROJECT_ID"
 ```
-**3.** Create your cluster
+3. Create your cluster
 ```sh
 terraform apply
 ```
-**4.** Once Terraform completes, log into the Kubernetes master of your cluster and run the following:
+4. Once Terraform completes, log into the Kubernetes master of your cluster and run the following:
 ```sh
 . /tmp/weave.sh
 ```
