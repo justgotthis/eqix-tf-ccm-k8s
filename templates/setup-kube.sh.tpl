@@ -3,8 +3,8 @@
 echo '* libraries/restart-without-asking boolean true' | sudo debconf-set-selections
 
 HOSTNAME=$(hostname -s)
-# Get Packet server's private IP address
-LOCAL_IP=$(ip a | grep "inet 10" | cut -d" " -f6 | cut -d"/" -f1)
+# Get Packet server's public IP address
+LOCAL_IP=$(ifconfig bond0 | grep inet | grep -v inet6 | cut -d" " -f10)
 
 get_version () {
 	PACKAGE=$1
