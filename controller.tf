@@ -41,6 +41,16 @@ resource "null_resource" "setup_master" {
     destination = "/tmp/setup-kubeadm.sh"
   }
 
+  provisioner "file" {
+    source      = "${path.module}/scripts/setup-ccm.sh"
+    destination = "/tmp/setup-ccm.sh"
+  }
+
+  provisioner "file" {
+    content     = data.template_file.weave_cni.rendered
+    destination = "/tmp/weave.sh"
+  }
+
   provisioner "remote-exec" {
     inline = [
       "chmod +x /tmp/*.sh",
@@ -62,6 +72,16 @@ data "external" "kubeadm_join" {
 
   # Make sure to only run this after the controller is up and setup
   depends_on = [null_resource.setup_master]
+}
+
+data "template_file" "weave_cni" {
+  // populate weave cni file to copy to master and apply as needed
+  template = file("${path.module}/templates/cni-plugins/weave.sh.tpl")
+
+  vars = {
+    pod_cidr = var.kubernetes_cluster_cidr
+  }
+
 }
 
 data "template_file" "setup_kubeadm" {
