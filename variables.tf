@@ -32,7 +32,7 @@ variable "node_count" {
 }
 
 variable "cluster_name" {
-  default = "barebones-k8s"
+  default = "bb-k8s"
   description = "The cluster project name, will prepend hostnames"
 }
 
@@ -57,7 +57,7 @@ variable "kubernetes_dns_ip" {
 
 variable "kubernetes_cluster_cidr" {
   description = "Kubernetes Pod Subnet"
-  default     = "172.16.0.0/12"
+  default     = "172.16.0.0/16"
 }
 
 variable "kubernetes_service_cidr" {
