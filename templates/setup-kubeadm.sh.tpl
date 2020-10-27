@@ -2,7 +2,7 @@
 # vim: syntax=sh
 
 HOSTNAME=$(hostname -s)
-LOCAL_IP=$(ip a | grep "inet 10" | cut -d" " -f6 | cut -d"/" -f1)
+LOCAL_IP=$(ifconfig bond0 | grep inet | grep -v inet6 | cut -d" " -f10)
 
 echo "[----- Setting up Kubernetes using kubeadm ----]"
 

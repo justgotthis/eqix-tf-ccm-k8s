@@ -29,7 +29,7 @@ apt-get install -y \
 	kubectl=$(get_version kubectl ${kubernetes_version}) \
 	cri-tools
 
-# Make the kubelet use only the private IP to run it's management controller pods
+# Make the kubelet use the public IP to run it's management controller pods
 echo "KUBELET_EXTRA_ARGS=\"--node-ip=$LOCAL_IP --address=$LOCAL_IP --cloud-provider=external\"" > /etc/default/kubelet
 
 echo "[---- Done setting up kubernetes configurations -----]"
