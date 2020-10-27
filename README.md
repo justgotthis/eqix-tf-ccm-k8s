@@ -54,4 +54,4 @@ Along with the ever so critical CNI add-on, you can also deploy Cloud Controller
 - Automatically provision EIP in Equinix Metal as you deploy LoadBalancer Services
 - Automatically manage the MetalLB configuration as services get added or deleted
 
-Currently, the only CNI available to run is Weave but once the Terraform script is complete and the cluster is up, you can install whatever CNI you need to test. 
+The current CNI available in this Terraform script is Weave but you can opt to install whatever CNI you need to test instead.
