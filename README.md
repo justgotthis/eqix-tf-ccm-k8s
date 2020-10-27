@@ -5,7 +5,7 @@ TL;DR
 ----
 
 1. Clone this repository
-2. Open the "terraform.tfvars" file and add your API Key and Project ID (additional options can be changed in this file as well if needed)
+2. Open the "terraform.tfvars" file and add your API Key and Project ID (additional options can be changed in this file as needed)
 ```sh
 auth_token = "API_KEY"
 project_id = "PROJECT_ID"
@@ -45,7 +45,7 @@ Operating System
 | ------ | ------- |
 | Ubuntu | 18.0.4  |
 
-This terraform script has been verified to work with Ubuntu 18.04 (default) and 16.04. Ubuntu 20.04 works for most Equinix Metal instance types but the c2.medium.x86 seems to have pod network issues (unable to reach TCP port 80 between pods) with Ubuntu 20.04 (possibly due to iptables bug).
+This terraform script has been verified to work with Ubuntu 18.04 (default) and Ubuntu 16.04. Ubuntu 20.04 works for most Equinix Metal instance types but the c2.medium.x86 seems to have pod network issues (unable to reach TCP port 80 between pods) with Ubuntu 20.04 (possibly due to a known iptables bug).
 
 What is included in the cluster?
 ----
