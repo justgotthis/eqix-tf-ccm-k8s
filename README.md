@@ -5,7 +5,7 @@ TL;DR
 ----
 
 1. Clone this repository
-2. Open the "terraform.tfvars" file and add your project ID and API Key (additional options can be changed in this file)
+2. Open the "terraform.tfvars" file and add your API Key and Project ID (additional options can be changed in this file as well if needed)
 ```sh
 auth_token = "API_KEY"
 project_id = "PROJECT_ID"
@@ -27,9 +27,10 @@ Versions
 ----
 The Kubernetes cluster will be deployed using the following version:
 
-| Component  | Version |
-| ---------- | ------- |
-| Kubernetes | v1.18.3 |
+| Component  | Version  |
+| ---------- | -------  |
+| Kubernetes | 1.18.3   |
+| Docker     | 19.03.10 |
 
 Kubernetes Network Subnets
 
