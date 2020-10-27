@@ -4,17 +4,17 @@ Bare Bones Kubernetes Cluster on Bare Metal
 TL;DR
 ----
 
-1. Clone this repository
-2. Open the "terraform.tfvars" file and add your project ID and API Key (additional options can be changed in this file)
+**1.** Clone this repository
+**2.** Open the "terraform.tfvars" file and add your project ID and API Key (additional options can be changed in this file)
 ```sh
 auth_token = "API_KEY"
 project_id = "PROJECT_ID"
 ```
-3. Create your cluster
+**3.** Create your cluster
 ```sh
 terraform apply
 ```
-4. Once Terraform completes, log into the Kubernetes master of your cluster and run the following:
+**4.** Once Terraform completes, log into the Kubernetes master of your cluster and run the following:
 ```sh
 . /tmp/weave.sh
 ```
@@ -25,22 +25,26 @@ This guide can be used as a reference to deploy Kubernetes on Equinix Metal bare
 
 Versions
 ----
-The Kubernetes cluster will be deployed using the following versions:
+The Kubernetes cluster will be deployed using the following version:
 
 | Component  | Version |
 | ---------- | ------- |
 | Kubernetes | v1.18.3 |
 
-Kubernetes Network:
+Kubernetes Network Subnets
 
 | Network                  | Subnet           |
 | ------------------------ | ---------------- |
 | Pod subnet               | 172.16.0.0/16    |
 | Service subnet           | 192.168.0.0/16   |
 
-Operating System: Ubuntu 18.0.4
+Operating System
 
-This terraform script has been verified to work with ubuntu 18.04 (default) and 16.04. Ubuntu 20.04 works for most Equinix Metal instance types but the c2.medium.x86 seems to have pod network issues (unable to reach TCP port 80 between pods) with ubuntu 20.04 (possibly due to iptables bug).
+| OS     | Version |
+| ------ | ------- |
+| Ubuntu | 18.0.4  |
+
+This terraform script has been verified to work with Ubuntu 18.04 (default) and 16.04. Ubuntu 20.04 works for most Equinix Metal instance types but the c2.medium.x86 seems to have pod network issues (unable to reach TCP port 80 between pods) with Ubuntu 20.04 (possibly due to iptables bug).
 
 What is included in the cluster?
 ----
