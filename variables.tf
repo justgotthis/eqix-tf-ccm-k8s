@@ -45,6 +45,10 @@ variable "kubernetes_version" {
   default     = "1.18.3"
 }
 
+variable "ccm_version" {
+  default = "v1.1.0"
+}
+
 variable "kubernetes_port" {
   description = "Kubernetes API Port"
   default     = "6443"
