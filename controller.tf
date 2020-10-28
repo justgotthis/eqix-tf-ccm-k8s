@@ -22,6 +22,26 @@ resource "null_resource" "setup_master" {
   }
 
   provisioner "file" {
+    content     = data.template_file.ccm_secret.rendered
+    destination = "/tmp/secret.yaml"
+  }
+
+  provisioner "file" {
+    content     = data.template_file.ccm_deploy.rendered
+    destination = "/tmp/deployment.yaml"
+  }
+
+  provisioner "file" {
+    source      = "${path.module}/scripts/setup-ccm.sh"
+    destination = "/tmp/setup-ccm.sh"
+  }
+
+  provisioner "file" {
+    content     = data.template_file.weave_cni.rendered
+    destination = "/tmp/weave.sh"
+  }
+
+  provisioner "file" {
     source      = "${path.module}/scripts/setup-base.sh"
     destination = "/tmp/setup-base.sh"
   }
@@ -41,16 +61,6 @@ resource "null_resource" "setup_master" {
     destination = "/tmp/setup-kubeadm.sh"
   }
 
-  provisioner "file" {
-    source      = "${path.module}/scripts/setup-ccm.sh"
-    destination = "/tmp/setup-ccm.sh"
-  }
-
-  provisioner "file" {
-    content     = data.template_file.weave_cni.rendered
-    destination = "/tmp/weave.sh"
-  }
-
   provisioner "remote-exec" {
     inline = [
       "chmod +x /tmp/*.sh",
@@ -58,6 +68,8 @@ resource "null_resource" "setup_master" {
       "/tmp/install-docker.sh",
       "/tmp/setup-kube.sh",
       "/tmp/setup-kubeadm.sh",
+      "/tmp/setup-ccm.sh",
+      "/tmp/weave.sh",
     ]
   }
 }
@@ -80,6 +92,27 @@ data "template_file" "weave_cni" {
 
   vars = {
     pod_cidr = var.kubernetes_cluster_cidr
+  }
+
+}
+
+data "template_file" "ccm_deploy" {
+  // populate ccm deploy file to copy to master and apply as needed
+  template = file("${path.module}/templates/ccm/deployment.yaml.tpl")
+
+  vars = {
+    ccm_version = var.ccm_version
+  }
+
+}
+
+data "template_file" "ccm_secret" {
+  // populate ccm secret file to copy to master and apply as needed
+  template = file("${path.module}/templates/ccm/secret.yaml.tpl")
+
+  vars = {
+    auth_token = var.auth_token
+    project_id = var.project_id
   }
 
 }
