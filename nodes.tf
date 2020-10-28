@@ -1,8 +1,8 @@
 resource "packet_device" "k8s_workers" {
-  count            = var.node_count
+  count            = var.worker_count
   project_id       = var.project_id
   facilities       = [var.facility]
-  plan             = var.plan_node
+  plan             = var.plan_worker
   operating_system = "ubuntu_18_04"
   hostname         = format("%s-worker%02d", var.cluster_name, count.index + 1)
   billing_cycle    = "hourly"
@@ -11,7 +11,7 @@ resource "packet_device" "k8s_workers" {
 
 # Using a null_resource so the packet_device doesn't have to wait to be initially provisioned
 resource "null_resource" "setup_worker" {
-  count = var.node_count
+  count = var.worker_count
 
   connection {
     type = "ssh"

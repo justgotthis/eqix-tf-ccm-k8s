@@ -3,7 +3,7 @@ resource "packet_device" "k8s_controller" {
   count            = var.master_count
   project_id       = var.project_id
   facilities       = [var.facility]
-  plan             = var.plan_primary
+  plan             = var.plan_master
   operating_system = "ubuntu_18_04"
   hostname         = format("%s-master%02d", var.cluster_name, count.index + 1)
   billing_cycle    = "hourly"
