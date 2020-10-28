@@ -11,12 +11,12 @@ variable "facility" {
   description = "Your Packet Facility Code"
 }
 
-variable "plan_primary" {
+variable "plan_master" {
   default = "c3.small.x86"
   description = "Plan for Controller"
 }
 
-variable "plan_node" {
+variable "plan_worker" {
   default = "c3.small.x86"
   description = "Plan for Workers"
 }
@@ -26,7 +26,7 @@ variable "master_count" {
   description = "Number of Master nodes."
 }
 
-variable "node_count" {
+variable "worker_count" {
   default     = "1"
   description = "Number of Worker nodes."
 }
