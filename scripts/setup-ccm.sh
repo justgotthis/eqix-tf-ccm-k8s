@@ -1,4 +1,8 @@
-#!/usr/bin/bash
+#!/bin/bash
 
-wget https://raw.githubusercontent.com/packethost/packet-ccm/master/deploy/template/secret.yaml
-wget https://raw.githubusercontent.com/packethost/packet-ccm/master/deploy/template/deployment.yaml
+echo "[------ Begin CCM Install -----]"
+
+kubectl apply -f /tmp/secret.yaml
+kubectl apply -f /tmp/deployment.yaml
+
+echo "[------ End CCM Install -----]"
