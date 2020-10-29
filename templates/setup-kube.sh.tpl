@@ -3,8 +3,8 @@
 echo '* libraries/restart-without-asking boolean true' | sudo debconf-set-selections
 
 HOSTNAME=$(hostname -s)
-# Get Packet server's public IP address
-LOCAL_IP=$(ifconfig bond0 | grep inet | grep -v inet6 | cut -d" " -f10)
+# Get Packet server's private IP address
+LOCAL_IP=$(ip a | grep "inet 10" | cut -d" " -f6 | cut -d"/" -f1)
 
 get_version () {
 	PACKAGE=$1
@@ -29,7 +29,7 @@ apt-get install -y \
 	kubectl=$(get_version kubectl ${kubernetes_version}) \
 	cri-tools
 
-# Make the kubelet use the public IP to run it's management controller pods
+# Make the kubelet use the private IP to run it's management controller pods
 echo "KUBELET_EXTRA_ARGS=\"--node-ip=$LOCAL_IP --address=$LOCAL_IP --cloud-provider=external\"" > /etc/default/kubelet
 
 echo "[---- Done setting up kubernetes configurations -----]"

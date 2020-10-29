@@ -2,7 +2,8 @@
 # vim: syntax=sh
 
 HOSTNAME=$(hostname -s)
-LOCAL_IP=$(ifconfig bond0 | grep inet | grep -v inet6 | cut -d" " -f10)
+PUB_IP=$(ifconfig bond0 | grep inet | grep -v inet6 | cut -d" " -f10)
+LOCAL_IP=$(ip a | grep "inet 10" | cut -d" " -f6 | cut -d"/" -f1)
 
 echo "[----- Setting up Kubernetes using kubeadm ----]"
 
@@ -26,9 +27,12 @@ kind: ClusterConfiguration
 clusterName: kubernetes
 kubernetesVersion: ${kubernetes_version}
 apiServer:
+  certSANs:
+  - $PUB_IP
+  - $LOCAL_IP
   extraArgs:
     secure-port: "${kubernetes_port}"
-    bind-address: $LOCAL_IP
+    bind-address: 0.0.0.0
 controllerManager:
   extraArgs:
     bind-address: $LOCAL_IP
@@ -61,7 +65,7 @@ clusterDomain: ${kubernetes_dns_domain}
 ---
 apiVersion: kubeproxy.config.k8s.io/v1alpha1
 kind: KubeProxyConfiguration
-bindAddress: $LOCAL_IP
+bindAddress: $LOCAL_PORT
 EOF
 
 kubeadm init --config kubeadm-config.yaml
