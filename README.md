@@ -1,15 +1,16 @@
-Simple Kubernetes Cluster on Bare Metal
+Simple Kubernetes Cluster on Equinix Metal
 ===========================
 
 TL;DR
 ----
 
 1. Clone this repository
+
 2. Open the "terraform.tfvars" file and add your API Key and Project ID (additional options can be changed in this file as needed)
 ```sh
 auth_token = "API_KEY"
 project_id = "PROJECT_ID"
-```
+
 3. Create your cluster
 ```sh
 terraform apply
@@ -52,6 +53,6 @@ This terraform script has been verified to work with Ubuntu 18.04 (default) and 
 Managed MetalLB
 ----
 Along with automatically deploying MetalLB components, this particular Terraform script has some automated MetalLB features:
-- Automatically fills in peers of all the nodes in the cluster (Legacy Metal Facilities, IBX WIP)
+- Automatically fills in peers of all the nodes in the cluster (Legacy Metal Facilities only, IBX WIP)
 - Automatically provision EIP in Equinix Metal as you deploy LoadBalancer Services
 - Automatically update the MetalLB configuration as services get added or deleted
