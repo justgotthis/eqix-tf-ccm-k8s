@@ -10,6 +10,7 @@ TL;DR
 ```sh
 auth_token = "API_KEY"
 project_id = "PROJECT_ID"
+```
 
 3. Create your cluster
 ```sh
