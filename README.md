@@ -1,23 +1,26 @@
-Bare Bones Kubernetes Cluster on Bare Metal
+Simple Kubernetes Cluster on Equinix Metal
 ===========================
 
 TL;DR
 ----
 
 1. Clone this repository
+
 2. Open the "terraform.tfvars" file and add your API Key and Project ID (additional options can be changed in this file as needed)
 ```sh
 auth_token = "API_KEY"
 project_id = "PROJECT_ID"
-```
+
 3. Create your cluster
 ```sh
 terraform apply
 ```
-4. Once Terraform completes, log into the Kubernetes master of your cluster and run the following:
-```sh
-. /tmp/weave.sh
-```
+
+What is included in the cluster?
+----
+- Single master cluster (master scaling WIP)
+- Deploy Services with Type=LoadBalancer
+- Weave CNI
 
 Introduction
 ----
@@ -47,16 +50,9 @@ Operating System
 
 This terraform script has been verified to work with Ubuntu 18.04 (default) and Ubuntu 16.04. Ubuntu 20.04 works for most Equinix Metal instance types but the c2.medium.x86 seems to have pod network issues (unable to reach TCP port 80 between pods) with Ubuntu 20.04 (possibly due to a known iptables bug).
 
-What is included in the cluster?
+Managed MetalLB
 ----
-This terraform script will deploy a cluster of 2, 1 master and 1 worker node by default. Although you can change the number of worker nodes, master scaling is still a WIP so currently this terraform script only creates single master clusters. It is a bare bones cluster in that, it automates the creation of the hardware and Kubernetes installation. The reason for this is that it leaves the end user the option to install whatever they would want on the cluster without starting with a bloated initial setup. One added bonus to this particular terraform script is that even though the cluster is bare bones, it also includes building blocks to deploy add-ons.
-
-Cluster Add-ons
-----
-Along with the ever so critical CNI add-on, you can also deploy Cloud Controller Manager which includes MetalLB. This particular MetalLB deployment has some automated features:
-- Automatically deploy MetalLB components
-- Automatically fill in peers of all the nodes in the cluster
+Along with automatically deploying MetalLB components, this particular Terraform script has some automated MetalLB features:
+- Automatically fills in peers of all the nodes in the cluster (Legacy Metal Facilities only, IBX WIP)
 - Automatically provision EIP in Equinix Metal as you deploy LoadBalancer Services
-- Automatically manage the MetalLB configuration as services get added or deleted
-
-The current CNI available in this Terraform script is Weave but you can opt to install whatever CNI you need to test instead.
+- Automatically update the MetalLB configuration as services get added or deleted
