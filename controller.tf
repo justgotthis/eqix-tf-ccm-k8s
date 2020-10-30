@@ -61,6 +61,11 @@ resource "null_resource" "setup_master" {
     destination = "/tmp/setup-kubeadm.sh"
   }
 
+  provisioner "file" {
+    content     = data.template_file.kubeconfig_me.rendered
+    destination = "/tmp/transform_kubeconfig.sh"
+  }
+
   provisioner "remote-exec" {
     inline = [
       "chmod +x /tmp/*.sh",
@@ -70,6 +75,7 @@ resource "null_resource" "setup_master" {
       "/tmp/setup-kubeadm.sh",
       "/tmp/setup-ccm.sh",
       "/tmp/weave.sh",
+      "/tmp/transform_kubeconfig.sh",
     ]
   }
 }
@@ -80,6 +86,17 @@ data "external" "kubeadm_join" {
 
   query = {
     host = element(packet_device.k8s_controller.*.access_public_ipv4, count.index)
+  }
+
+  # Make sure to only run this after the controller is up and setup
+  depends_on = [null_resource.setup_master]
+}
+
+data "external" "kubeconfig_xfer" {
+  program = ["${path.module}/scripts/scp_kubeconfig.sh"]
+
+  query = {
+    mypub = packet_device.k8s_controller[0].access_public_ipv4
   }
 
   # Make sure to only run this after the controller is up and setup
@@ -127,5 +144,13 @@ data "template_file" "setup_kubeadm" {
     kubernetes_dns_domain   = var.kubernetes_dns_domain
     kubernetes_cluster_cidr = var.kubernetes_cluster_cidr
     kubernetes_service_cidr = var.kubernetes_service_cidr
+  }
+}
+
+data "template_file" "kubeconfig_me" {
+  template = file("${path.module}/templates/transform-kubeconfig.sh.tpl")
+
+  vars = {
+    pub_ip = packet_device.k8s_controller[0].access_public_ipv4
   }
 }
