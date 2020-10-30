@@ -9,3 +9,7 @@ output "kubeadm_join_command" {
 output "worker_addresses" {
   value = [packet_device.k8s_workers.*.access_public_ipv4]
 }
+
+output "kubeconfig_msg" {
+  value = data.external.kubeconfig_xfer.result["command"]
+}
