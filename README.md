@@ -12,12 +12,17 @@ auth_token = "API_KEY"
 project_id = "PROJECT_ID"
 ```
 
-3. Create your cluster
+3. Initialize Terraform
+```sh
+terraform init
+```
+
+4. Create your cluster
 ```sh
 terraform apply
 ```
 
-4. Copy kubeconfig file from the master using the command output from the Terraform script above.
+5. Copy kubeconfig file from the Kubernetes master using the command output from the Terraform script above.
 
 What is included in the cluster?
 ----
