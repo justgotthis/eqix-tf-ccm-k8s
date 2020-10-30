@@ -17,6 +17,8 @@ project_id = "PROJECT_ID"
 terraform apply
 ```
 
+4. Copy kubeconfig file from the master using the command output from the Terraform script above.
+
 What is included in the cluster?
 ----
 - Single master cluster (master scaling WIP)
@@ -56,4 +58,5 @@ Managed MetalLB
 Along with automatically deploying MetalLB components, this particular Terraform script has some automated MetalLB features:
 - Automatically fills in peers of all the nodes in the cluster (Legacy Metal Facilities only, IBX WIP)
 - Automatically provision EIP in Equinix Metal as you deploy LoadBalancer Services
-- Automatically update the MetalLB configuration as services get added or deleted
+- Automatically deletes EIP's in Equinix Metal as you delete LoadBalancer Services (need to explicitly delete services, if cluster is removed and services of LB type still exist, EIP's will not get removed from the Metal Portal)
+- Automatically update the MetalLB configuration as services get added or deleted 
