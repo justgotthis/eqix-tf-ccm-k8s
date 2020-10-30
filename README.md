@@ -36,7 +36,7 @@ The Kubernetes cluster will be deployed using the following version:
 | Component  | Version  |
 | ---------- | -------  |
 | Kubernetes | 1.18.3   |
-| Docker     | 19.03.10 |
+| Docker     | 19.03.13 |
 
 Kubernetes Network Subnets
 

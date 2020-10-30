@@ -65,7 +65,7 @@ clusterDomain: ${kubernetes_dns_domain}
 ---
 apiVersion: kubeproxy.config.k8s.io/v1alpha1
 kind: KubeProxyConfiguration
-bindAddress: $LOCAL_PORT
+bindAddress: $LOCAL_IP
 EOF
 
 kubeadm init --config kubeadm-config.yaml
