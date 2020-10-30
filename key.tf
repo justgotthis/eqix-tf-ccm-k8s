@@ -8,7 +8,7 @@ resource "local_file" "private_key_pem" {
   depends_on = [tls_private_key.k8s_cluster_access_key]
 
   content    = tls_private_key.k8s_cluster_access_key.private_key_pem
-  filename   = "bb-keys/cluster-private-key.pem"
+  filename   = "ccm-keys/cluster-private-key.pem"
 }
 
 resource "local_file" "public_key_pem" {
@@ -16,7 +16,7 @@ resource "local_file" "public_key_pem" {
   depends_on = [tls_private_key.k8s_cluster_access_key]
 
   content    = tls_private_key.k8s_cluster_access_key.public_key_pem
-  filename   = "bb-keys/cluster-public-key.pem"
+  filename   = "ccm-keys/cluster-public-key.pem"
 }
 
 resource "local_file" "public_key_openssh" {
@@ -24,7 +24,7 @@ resource "local_file" "public_key_openssh" {
   depends_on = [tls_private_key.k8s_cluster_access_key]
 
   content    = tls_private_key.k8s_cluster_access_key.public_key_openssh
-  filename   = "bb-keys/cluster-openssh.pub"
+  filename   = "ccm-keys/cluster-openssh.pub"
 }
 
 resource "null_resource" "chmod" {
@@ -35,6 +35,6 @@ resource "null_resource" "chmod" {
   }
 
   provisioner "local-exec" {
-    command = "chmod 600 bb-keys/cluster-private-key.pem"
+    command = "chmod 600 ccm-keys/cluster-private-key.pem"
   }
 }

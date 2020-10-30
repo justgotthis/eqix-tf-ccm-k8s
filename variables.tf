@@ -32,7 +32,7 @@ variable "worker_count" {
 }
 
 variable "cluster_name" {
-  default = "bb-k8s"
+  default = "ccm-k8s"
   description = "The cluster project name, will prepend hostnames"
 }
 
